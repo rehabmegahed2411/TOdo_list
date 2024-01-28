@@ -75,7 +75,7 @@ class _HomePageState extends State<HomePage> {
           MyButton(
             label: '+Add Task',
             onTap: () async {
-              TaskInfo? newTask = await Get.to(AddTaskPage());
+              TaskInfo? newTask = await Get.to(() => AddTaskPage());
               // Handle the new task as needed
               if (newTask != null) {
                 setState(() {
@@ -117,9 +117,7 @@ class HourlyTimeline extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  Widget _buildTimelineHour(int hour) {
+  }Widget _buildTimelineHour(int hour) {
     String formattedHour = hour % 12 == 0 ? '12' : (hour % 12).toString();
     String amPm = hour < 12 ? 'AM' : 'PM';
     return Padding(
@@ -132,26 +130,30 @@ class HourlyTimeline extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  Widget _buildTaskWidget(BuildContext context, TaskInfo task) {
-    double startFraction = task.startTime.hour + (task.startTime.minute / 60)/24;
-    double endFraction = task.endTime.hour + (task.endTime.minute / 60)/24;
-    double topPosition = (startFraction ) * 0.8;
-    double taskHeight = ((endFraction- startFraction) ) * 0.8;
+  }Widget _buildTaskWidget(BuildContext context, TaskInfo task) {
+    double startFraction =
+        task.startTime.hour + (task.startTime.minute / 60);
+    double endFraction = task.endTime.hour + (task.endTime.minute / 60) ;
+    double topPosition = (startFraction) *0.8;
+    double taskHeight = ((endFraction - startFraction)) * 0.8;
 
     return Positioned(
+      
       top: topPosition,
-      left: 50, // Adjust the left position as needed
+      left: 50, 
+       height: taskHeight * MediaQuery.of(context).size.height,
+    width: 0.8 * MediaQuery.of(context).size.width,// Adjust the left position as needed
       child: FractionallySizedBox(
+       
         heightFactor: taskHeight,
+    
         widthFactor: 0.8,
         child: Container(
-          color: Colors.blue, // Adjust the color as needed
+          color: Color(0xFF8ABAC5), // Adjust the color as needed
           child: Center(
             child: Text(
               task.title,
-              style: TextStyle(color: Colors.white),
+              style: TextStyle(color: Color(0xFFCDE2E6)),
             ),
           ),
         ),

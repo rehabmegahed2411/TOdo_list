@@ -18,8 +18,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
   final TextEditingController _titleController = TextEditingController();
   DateTime _selectedDate = DateTime.now();
   String _endTime = '9:30 PM';
-  String _startTime =
-      DateFormat('hh:mm a').format(DateTime.now()).toString();
+  String _startTime = DateFormat('hh:mm a').format(DateTime.now()).toString();
   int _selectedColor = 0;
 
   @override
@@ -99,26 +98,30 @@ class _AddTaskPageState extends State<AddTaskPage> {
     );
   }
 
- _validateDate(BuildContext context) {
-  if (_titleController.text.isNotEmpty) {
-    TaskInfo myTask = TaskInfo(
-  title: _titleController.text,
-  startTime: DateTime.now(), // Replace with your selected start time
-  endTime: DateTime.now().add(Duration(hours: 1)), // Replace with your selected end time
-);
+  _validateDate(BuildContext context) {
+    if (_titleController.text.isNotEmpty) {
+      TaskInfo myTask = TaskInfo(
+        title: _titleController.text,
+        startTime: DateTime.now(), // Replace with your selected start time
+        endTime: DateTime.now()
+            .add(Duration(hours: 1)), // Replace with your selected end time
+      );
+     // setState(() {
+       // tasks.add(myTask);
+     // });
 
-    Navigator.of(context).pop(myTask);
-  } else if (_titleController.text.isEmpty) {
-    Get.snackbar(
-      'Required',
-      'All fields are required!',
-      snackPosition: SnackPosition.BOTTOM,
-      backgroundColor: Colors.white,
-      colorText: Color.fromARGB(255, 102, 133, 156),
-      icon: Icon(Icons.warning_amber_rounded),
-    );
+      Navigator.of(context).pop(myTask);
+    } else if (_titleController.text.isEmpty) {
+      Get.snackbar(
+        'Required',
+        'All fields are required!',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.white,
+        colorText: Color.fromARGB(255, 102, 133, 156),
+        icon: Icon(Icons.warning_amber_rounded),
+      );
+    }
   }
-}
 
   _colorPalette() {
     return Column(
@@ -131,7 +134,8 @@ class _AddTaskPageState extends State<AddTaskPage> {
         SizedBox(
           height: 8.0,
         ),
-        Wrap(children: List<Widget>.generate(
+        Wrap(
+          children: List<Widget>.generate(
             3,
             (int index) {
               return GestureDetector(
@@ -193,7 +197,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
     } else if (isStartTime == true) {
       String _formatedTime = pickedTime?.format(context) ?? '';
       setState(() {
-        _startTime = _formatedTime ;
+        _startTime = _formatedTime;
       });
     } else if (isStartTime == false) {
       String _formatedTime = pickedTime?.format(context) ?? '';
@@ -204,8 +208,6 @@ class _AddTaskPageState extends State<AddTaskPage> {
   }
 
   Future<TimeOfDay?> _showTimePicker(BuildContext context) async {
-    
-
     return showTimePicker(
       context: context,
       initialTime: TimeOfDay(
